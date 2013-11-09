@@ -22,7 +22,7 @@ exports.convert = function(req, res){
     var testCode = "## Heading2 \n\n_Hello_ **World**!\n```\nint main() \n{\n\tint a = 1+2;\n\treturn 0;\n}\n```";
     var rawHtml =  marked(testCode);
 
-    //var rawHtml =  marked(req.body.source);
-    console.log(rawHtml);
+    //rawHtml =  marked(req.query.source); // HTTP GET
+    rawHtml = marked(req.body.source); // HTTP POST
     res.send(rawHtml);
 };
