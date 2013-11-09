@@ -72,7 +72,7 @@ html
       // The file input field used as target for the file upload widget 
       input#fileupload(type='file', name='files[]', multiple='multiple')
 
-    button(type='submit') down
+    button#btn_down(type='submit') down
     
     form
         //textarea(cols='80', rows='10', id='editor', class='ckeditor', name='content')
@@ -83,7 +83,7 @@ html
     #display
 
     script
-        CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
+        CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'90%',height:'40%'});
         var input = "!{output}";
         CKEDITOR.instances.editor.setData(decodeURIComponent(input));
         //console.log(input);
