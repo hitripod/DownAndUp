@@ -26,6 +26,7 @@ exports.convert = function(req, res){
     //rawHtml =  marked(req.query.source); // HTTP GET
     var input = decodeURIComponent(req.body.source);// HTTP POST
     var markedInput = marked(input);
-    var rawHtml = encodeURIComponent(markedInput); 
-    res.send(rawHtml);
+    res.send(markedInput);
+    //var rawHtml = encodeURIComponent(markedInput); 
+    //res.send(rawHtml);
 };
