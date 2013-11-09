@@ -14,8 +14,9 @@ html
   body(id='outputBlock')!= body
     form
         textarea(cols='80', rows='10', id='editor', name='content')
+            !=  output
         script
             //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350',filebrowserImageUploadUrl:'/ImgUpload.jsp'}); 
             //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
             CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
-    !=  output
+    //!=  output
