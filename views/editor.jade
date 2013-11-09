@@ -13,13 +13,18 @@ html
     link(rel='stylesheet', href='/css/customized.css')
   body(id='outputBlock')!= body
 
-    button(type='submit') down
+    button#btn_down(type='submit') down
     
     form
         textarea(cols='80', rows='10', id='editor', name='content')
             !=  output
-        script
-            //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350',filebrowserImageUploadUrl:'/ImgUpload.jsp'}); 
-            //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
-            CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
     //!=  output
+    script
+        //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
+        CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
+        console.log(window.location.host);
+        var data = '';
+        $.get( '/down', data);
+        console.log(data);
+        
+
