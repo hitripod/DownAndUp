@@ -15,11 +15,11 @@
 //    }
 //}
 //
-window.onload = function() {
-    $('code').contents().unwrap();
-    selectText('outputBlock');
-    alert("hi");
-}
+//window.onload = function() {
+//    $('code').contents().unwrap();
+//    selectText('outputBlock');
+//    alert("hi");
+//}
 
 $(document).ready(function(){
     $('#fileupload').fileupload({
