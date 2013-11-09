@@ -18,6 +18,7 @@ html
     link(rel='stylesheet', href='/css/jquery.fileupload.css')
     link(rel='stylesheet', href='/css/highlight.css')
     link(rel='stylesheet', href='/css/customized.css')
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
   body(id='outputBlock')!= body
       
     nav.navbar.navbar-default(role='navigation')
@@ -79,8 +80,7 @@ html
             //!=  output
     //!=  output
     script
-        //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
-        CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
+        CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'90%',height:'40%'});
         //console.log(window.location.host);
         //var data = '';
         //$.get( '/down', data, error);
@@ -120,7 +120,6 @@ html
                     */
                     //CKEDITOR.instances.editor.updateElement();
                     //console.log(CKEDITOR.document.head);
-                    //CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
                 },
                 "html"
             );
