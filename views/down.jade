@@ -3,9 +3,9 @@ html
   head
     title= title
     script(src='/components/jquery/jquery.min.js', type='text/javascript') 
-    script(src='/js/zclip.js', type='text/javascript')
     script(src='/js/clipboard.js', type='text/javascript')
     script(src='/components/ckeditor/ckeditor.js', type='text/javascript')
+    script(src='/components/ckeditor/adapters/jquery.js', type='text/javascript')
     script(src='/components/ckeditor/config.js', type='text/javascript')
 
     link(rel='stylesheet', href='/css/style.css')
@@ -16,5 +16,6 @@ html
         textarea(cols='80', rows='10', id='editor', name='content')
         script
             //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350',filebrowserImageUploadUrl:'/ImgUpload.jsp'}); 
-            CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'}); 
+            //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
+            CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
     !=  output
