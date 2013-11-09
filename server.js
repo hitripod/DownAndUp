@@ -1,6 +1,37 @@
+var express = require('express'),
+  mongoose = require('mongoose'),
+  fs = require('fs'),
+  config = require('./config/config');
+
+mongoose.connect(config.db);
+var db = mongoose.connection;
+db.on('error', function () {
+  throw new Error('unable to connect to database at ' + config.db);
+});
+
+var modelsPath = __dirname + '/app/models';
+fs.readdirSync(modelsPath).forEach(function (file) {0
+  if (file.indexOf('.js') >= 0) {
+    require(modelsPath + '/' + file);
+  }
+});
+
+var app = express();
+
+require('./config/express')(app, config);
+require('./config/routes')(app);
 // https://github.com/nko4/website/blob/master/module/README.md#nodejs-knockout-deploy-check-ins
 require('nko')('rCHfaWaeKPfJgPZm');
 
+//app.listen(config.port);
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
 var isProduction = (process.env.NODE_ENV === 'production');
 var http = require('http');
 var port = (isProduction ? 80 : 8000);
