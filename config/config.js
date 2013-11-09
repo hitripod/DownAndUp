@@ -8,7 +8,8 @@ var config = {
     app: {
       name: 'yeoman'
     },
-    port: 3000,
+    //port: 3000,
+    port: 80,
     db: 'mongodb://localhost/yeoman-development'
   },
 
@@ -17,7 +18,8 @@ var config = {
     app: {
       name: 'yeoman'
     },
-    port: 3000,
+    //port: 3000,
+    port: 80,
     db: 'mongodb://localhost/yeoman-test'
   },
 
@@ -26,7 +28,8 @@ var config = {
     app: {
       name: 'yeoman'
     },
-    port: 3000,
+    //port: 3000,
+    port: 80,
     db: 'mongodb://localhost/yeoman-production'
   }
 };
