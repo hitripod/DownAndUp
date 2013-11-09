@@ -1,5 +1,9 @@
 exports.index = function(req, res){
-    res.render('editor');
+
+    var fs = require('fs');
+    var path = require('path');
+    var example = fs.readFileSync(path.join(__dirname, '../public/') + 'static/example.html','utf8')
+    res.render('editor', {output: example});
 };
 
 exports.convert = function(req, res){
