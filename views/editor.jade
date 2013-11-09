@@ -75,31 +75,25 @@ html
     button#btn_down(type='submit') down
     
     form
-        //textarea(cols='80', rows='10', id='editor', class='ckeditor', name='content')
         textarea(cols='80', rows='10', id='editor', name='content')
-            //!=  output
-    //!=  output
 
     #display
-
     script
         CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'90%',height:'40%'});
-        //var strOriginal = "!{output}";
         var strOriginal = decodeURIComponent("!{output}");
-        //strOriginal = '<pre><code>' + "!{output}" + '</code></pre>';
         strOriginal = '<pre><code>' + strOriginal + '</code></pre>';
-        //CKEDITOR.instances.editor.setData(decodeURIComponent(strOriginal));
         CKEDITOR.instances.editor.setData(strOriginal);
-        //console.log(strOriginal);
         var loadUrl = '/down';
         $("#btn_down").click(function(){
+            console.log($("#btn_down").text());
+            //$("#btn_down").val() = 'up';
+            //$("#btn_down").value('up');
+            $("#btn_down").text('up');
             var strModified = CKEDITOR.instances.editor.getSnapshot();
-            //console.log(strModified);
             strSent = strModified.replace(/<pre>/gi, '');
             strSent = strSent.replace(/<code>/gi, '');
             strSent = strSent.replace(/<\/code>/gi, '');
             strSent = strSent.replace(/<\/pre>/gi, '');
-            //console.log(strSent);
             var strSent = encodeURIComponent(strSent);
             CKEDITOR.instances.editor.setData('');
             $.post(
@@ -107,17 +101,10 @@ html
                 {source: strSent},
                 function(responseText){
                     responseText = '<pre><code>' + responseText + '</code></pre>';
-                    //console.log(responseText);
                     //console.log(CKEDITOR.instances.editor);
                     //$("#editor").html(responseText);
-                    //CKEDITOR.instances.editor.setData('');
-                    //CKEDITOR.instances.editor.setData(decodeURIComponent(responseText));
-                    //$("#display").html(decodeURIComponent(responseText));
                     CKEDITOR.instances.editor.setData(responseText);
                     $("#display").html(responseText);
-                    //CKEDITOR.instances.editor.insertHtml(decodeURIComponent(responseText));
-                    //CKEDITOR.instances.editor.updateElement();
-                    //console.log(CKEDITOR.document.head);
                 },
                 "html"
             );
