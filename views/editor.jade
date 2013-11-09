@@ -12,6 +12,9 @@ html
     link(rel='stylesheet', href='/css/highlight.css')
     link(rel='stylesheet', href='/css/customized.css')
   body(id='outputBlock')!= body
+
+    button(type='submit') down
+    
     form
         textarea(cols='80', rows='10', id='editor', name='content')
             !=  output
