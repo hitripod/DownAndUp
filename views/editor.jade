@@ -16,15 +16,55 @@ html
     button#btn_down(type='submit') down
     
     form
+        //textarea(cols='80', rows='10', id='editor', class='ckeditor', name='content')
         textarea(cols='80', rows='10', id='editor', name='content')
-            !=  output
+            //!=  output
     //!=  output
     script
         //CKEDITOR.replace('editor',{skin:'v2',toolbar:'SAMPLE',width:'630',height:'350'});
         CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
-        console.log(window.location.host);
-        var data = '';
-        $.get( '/down', data);
-        console.log(data);
+        //console.log(window.location.host);
+        //var data = '';
+        //$.get( '/down', data, error);
+        //$.post( '/down', data);
+        //$.post( '/down', 'hi');
+        //console.log(data);
+        //var input = encodeURIComponent("!{output}");
+        var input = "!{output}";
+        CKEDITOR.instances.editor.setData(decodeURIComponent(input));
+        //console.log(input);
+        //  $.post()
+        var loadUrl = '/down';
+        $("#btn_down").click(function(){
+            $.post(
+                loadUrl,
+                {source: input},
+                function(responseText){
+                    console.log('responseText');
+                    console.log(responseText);
+                    console.log(CKEDITOR.instances.editor);
+                    //$("#editor").html(responseText);
+                    //$("#editor").html('yoyooooo');
+                    //console.log($("#editor").html());
+                    //$("#editor").html(responseText);
+                    //CKEDITOR.instances.editor.setData('yoyooooo');
+                    CKEDITOR.instances.editor.setData(decodeURIComponent(responseText));
+                    //CKEDITOR.instances.editor.insertHtml(responseText);
+                    //console.log(CKEDITOR.instances.editor.getData());
+                    /*
+                    $('textarea.ckeditor').each(function () {
+                        var $textarea = $(this);
+                        //console.log($textarea);
+                        console.log($textarea.attr('name'));
+                        console.log(CKEDITOR.instances.editor.getData());
+                        //$textarea.val(CKEDITOR.instances[$textarea.attr('name')].getData());
+                    });
+                    */
+                    //CKEDITOR.instances.editor.updateElement();
+                    //console.log(CKEDITOR.document.head);
+                    //CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
+                },
+                "html"
+            );
+        });
         
-

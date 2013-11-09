@@ -3,7 +3,7 @@
 var request = require('request');
 
 module.exports = function (grunt) {
-  var reloadPort = 35729, files;
+  //var reloadPort = 35729, files;
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -15,37 +15,38 @@ module.exports = function (grunt) {
     watch: {
       options: {
         nospawn: true,
-        livereload: reloadPort
+        //livereload: reloadPort
       },
       server: {
         files: [
           'server.js',
           'routes/*.js'
         ],
-        tasks: ['develop', 'delayed-livereload']
+        //tasks: ['develop', 'delayed-livereload']
+        tasks: ['develop']
       },
       js: {
         files: ['public/js/*.js'],
         options: {
-          livereload: reloadPort
+          //livereload: reloadPort
         }
       },
       swf: {
         files: ['public/swf/*.swf'],
         options: {
-          livereload: reloadPort
+          //livereload: reloadPort
         }
       },
       css: {
         files: ['public/css/*.css'],
         options: {
-          livereload: reloadPort
+          //livereload: reloadPort
         }
       },
       jade: {
         files: ['views/*.jade'],
         options: {
-          livereload: reloadPort
+          //livereload: reloadPort
         }
       }
     }
@@ -55,6 +56,7 @@ module.exports = function (grunt) {
   files = grunt.config('watch.server.files');
   files = grunt.file.expand(files);
 
+/*
   grunt.registerTask('delayed-livereload', 'Live reload after the node server has restarted.', function () {
     var done = this.async();
     setTimeout(function () {
@@ -69,7 +71,7 @@ module.exports = function (grunt) {
         });
     }, 500);
   });
-
+*/
   grunt.loadNpmTasks('grunt-develop');
   grunt.loadNpmTasks('grunt-contrib-watch');
 

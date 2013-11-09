@@ -3,6 +3,7 @@ exports.index = function(req, res){
     var fs = require('fs');
     var path = require('path');
     var example = fs.readFileSync(path.join(__dirname, '../public/') + 'static/example.html','utf8')
+    example = encodeURIComponent(example);
     res.render('editor', {output: example});
 };
 
@@ -11,7 +12,7 @@ exports.convert = function(req, res){
     var marked = require("marked");
     var hljs   = require("highlight.js");
     var http   = require('http');
-    var rawHtml;
+    //var rawHtml;
 
     marked.setOptions({
         highlight: function (code, lang) {
@@ -19,10 +20,12 @@ exports.convert = function(req, res){
         }
     });
 
-    var testCode = "## Heading2 \n\n_Hello_ **World**!\n```\nint main() \n{\n\tint a = 1+2;\n\treturn 0;\n}\n```";
-    var rawHtml =  marked(testCode);
+    //var testCode = "## Heading2 \n\n_Hello_ **World**!\n```\nint main() \n{\n\tint a = 1+2;\n\treturn 0;\n}\n```";
+    //var rawHtml =  marked(testCode);
 
     //rawHtml =  marked(req.query.source); // HTTP GET
-    rawHtml = marked(req.body.source); // HTTP POST
+    var input = decodeURIComponent(req.body.source);// HTTP POST
+    var markedInput = marked(input);
+    var rawHtml = encodeURIComponent(markedInput); 
     res.send(rawHtml);
 };
