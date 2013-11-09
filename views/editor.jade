@@ -73,7 +73,6 @@ html
       strOriginal#fileupload(type='file', name='files[]', multiple='multiple')
 
     button#btn_down(type='submit') down
-    button#btn_up(type='submit') up
     
     form
         textarea(cols='80', rows='10', id='editor', name='content')
@@ -86,37 +85,39 @@ html
         strOriginal = '<pre><code>' + strOriginal + '</code></pre>';
         CKEDITOR.instances.editor.setData(strOriginal);
         var loadUrl = '/down';
-        var up;   // pure text before markdown conversion
-        var down; // markdown-formatted html
+        //var up;   // pure text before markdown conversion
+        //var down; // markdown-formatted html
         CKEDITOR.config.allowedContent = true;
+        var strModified = '';
+        var strSent = '';
         $("#btn_down").click(function(){
-            console.log($("#btn_down").text());
-            //$("#btn_down").val() = 'up';
-            //$("#btn_down").value('up');
-            $("#btn_down").text('up');
-            var strModified = CKEDITOR.instances.editor.getSnapshot();
-            strSent = strModified.replace(/<pre>/gi, '');
-            strSent = strSent.replace(/<code>/gi, '');
-            strSent = strSent.replace(/<\/code>/gi, '');
-            strSent = strSent.replace(/<\/pre>/gi, '');
-            var strSent = encodeURIComponent(strSent);
-            CKEDITOR.instances.editor.setData('');
-            up = strSent;
-            $.post(
-                loadUrl,
-                {source: strSent},
-                function(responseText){
-                    responseText = '<pre><code>' + responseText + '</code></pre>';
-                    up = CKEDITOR.instances.editor.getData();
-                    console.log(up)
-                    CKEDITOR.instances.editor.setData(responseText);
-                    $("#display").html(responseText);
-                },
-                "html"
-            );
-        });
-        $("#btn_up").click(function(){
-            down = CKEDITOR.instances.editor.getData();
-            console.log(up);
-            CKEDITOR.instances.editor.setData(up);
+            if ($("#btn_down").text() == 'down') {
+                //console.log($("#btn_down").text());
+                $("#btn_down").text('up');
+                strModified = CKEDITOR.instances.editor.getSnapshot();
+                strSent = strModified.replace(/<pre>/gi, '');
+                strSent = strSent.replace(/<code>/gi, '');
+                strSent = strSent.replace(/<\/code>/gi, '');
+                strSent = strSent.replace(/<\/pre>/gi, '');
+                strSent = encodeURIComponent(strSent);
+                CKEDITOR.instances.editor.setData('');
+                $.post(
+                    loadUrl,
+                    {source: strSent},
+                    function(responseText){
+                        responseText = '<pre><code>' + responseText + '</code></pre>';
+                        //up = CKEDITOR.instances.editor.getData();
+                        //console.log(up)
+                        CKEDITOR.instances.editor.setData(responseText);
+                        $("#display").html(responseText);
+                    },
+                    "html"
+                );
+            }
+            else if ($("#btn_down").text() == 'up') {
+                //console.log($("#btn_down").text());
+                $("#btn_down").text('down');
+                CKEDITOR.instances.editor.setData(strModified);
+                $("#display").html('');
+            };
         });
