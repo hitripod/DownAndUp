@@ -73,17 +73,22 @@ html
       strOriginal#fileupload(type='file', name='files[]', multiple='multiple')
 
     button#btn_down(type='submit') down
+    button#btn_up(type='submit') up
     
     form
         textarea(cols='80', rows='10', id='editor', name='content')
 
     #display
+
     script
         CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'90%',height:'40%'});
         var strOriginal = decodeURIComponent("!{output}");
         strOriginal = '<pre><code>' + strOriginal + '</code></pre>';
         CKEDITOR.instances.editor.setData(strOriginal);
         var loadUrl = '/down';
+        var up;   // pure text before markdown conversion
+        var down; // markdown-formatted html
+        CKEDITOR.config.allowedContent = true;
         $("#btn_down").click(function(){
             console.log($("#btn_down").text());
             //$("#btn_down").val() = 'up';
@@ -96,16 +101,22 @@ html
             strSent = strSent.replace(/<\/pre>/gi, '');
             var strSent = encodeURIComponent(strSent);
             CKEDITOR.instances.editor.setData('');
+            up = strSent;
             $.post(
                 loadUrl,
                 {source: strSent},
                 function(responseText){
                     responseText = '<pre><code>' + responseText + '</code></pre>';
-                    //console.log(CKEDITOR.instances.editor);
-                    //$("#editor").html(responseText);
+                    up = CKEDITOR.instances.editor.getData();
+                    console.log(up)
                     CKEDITOR.instances.editor.setData(responseText);
                     $("#display").html(responseText);
                 },
                 "html"
             );
+        });
+        $("#btn_up").click(function(){
+            down = CKEDITOR.instances.editor.getData();
+            console.log(up);
+            CKEDITOR.instances.editor.setData(up);
         });
