@@ -66,13 +66,13 @@ html
             li
               a(href='#') Log Out
 
-    span.btn.btn-success.fileinput-button
+    span.btn.btn-success.filestrOriginal-button
       i.glyphicon.glyphicon-plus
       span Select files...
-      // The file input field used as target for the file upload widget 
-      input#fileupload(type='file', name='files[]', multiple='multiple')
+      // The file strOriginal field used as target for the file upload widget 
+      strOriginal#fileupload(type='file', name='files[]', multiple='multiple')
 
-    button(type='submit') down
+    button#btn_down(type='submit') down
     
     form
         //textarea(cols='80', rows='10', id='editor', class='ckeditor', name='content')
@@ -84,18 +84,31 @@ html
 
     script
         CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'630',height:'350'});
-        var input = "!{output}";
-        CKEDITOR.instances.editor.setData(decodeURIComponent(input));
-        //console.log(input);
+        //var strOriginal = "!{output}";
+        var strOriginal = decodeURIComponent("!{output}");
+        //strOriginal = '<pre><code>' + "!{output}" + '</code></pre>';
+        strOriginal = '<pre><code>' + strOriginal + '</code></pre>';
+        //CKEDITOR.instances.editor.setData(decodeURIComponent(strOriginal));
+        CKEDITOR.instances.editor.setData(strOriginal);
+        //console.log(strOriginal);
         var loadUrl = '/down';
         $("#btn_down").click(function(){
+            var strModified = CKEDITOR.instances.editor.getSnapshot();
+            //console.log(strModified);
+            strSent = strModified.replace(/<pre>/gi, '');
+            strSent = strSent.replace(/<code>/gi, '');
+            strSent = strSent.replace(/<\/code>/gi, '');
+            strSent = strSent.replace(/<\/pre>/gi, '');
+            //console.log(strSent);
+            var strSent = encodeURIComponent(strSent);
             CKEDITOR.instances.editor.setData('');
             $.post(
                 loadUrl,
-                {source: input},
+                {source: strSent},
                 function(responseText){
+                    responseText = '<pre><code>' + responseText + '</code></pre>';
                     //console.log(responseText);
-                    console.log(CKEDITOR.instances.editor);
+                    //console.log(CKEDITOR.instances.editor);
                     //$("#editor").html(responseText);
                     //CKEDITOR.instances.editor.setData('');
                     //CKEDITOR.instances.editor.setData(decodeURIComponent(responseText));
@@ -109,4 +122,3 @@ html
                 "html"
             );
         });
-        

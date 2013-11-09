@@ -25,8 +25,14 @@ exports.convert = function(req, res){
 
     //rawHtml =  marked(req.query.source); // HTTP GET
     var input = decodeURIComponent(req.body.source);// HTTP POST
+
+    //var strSent = strModified.replace('<pre><code>', '');
+            //strSent = strSent.replace('</code></pre>', '');
+
+
+            
     var markedInput = marked(input);
     res.send(markedInput);
-    //var rawHtml = encodeURIComponent(markedInput); 
+    //var rawHtml = '<pre><code>' + markedInput + '</code></pre>';
     //res.send(rawHtml);
 };
