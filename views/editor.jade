@@ -85,8 +85,8 @@ html
     script
         CKEDITOR.replace('editor',{toolbar:'SAMPLE',width:'90%',height:'40%'});
         var input = "!{output}";
-        CKEDITOR.instances.editor.setData(decodeURIComponent(input));
-        //console.log(input);
+        var displayOnCKEditor = "<pre><code>" + input + "</code></pre>";
+        CKEDITOR.instances.editor.setData(decodeURIComponent(displayOnCKEditor));
         var loadUrl = '/down';
         $("#btn_down").click(function(){
             CKEDITOR.instances.editor.setData('');
