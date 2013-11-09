@@ -4,16 +4,74 @@ html
     title= title
     script(src='/components/jquery/jquery.min.js', type='text/javascript') 
     script(src='/js/clipboard.js', type='text/javascript')
+    script(src='/js/down-and-up.js', type='text/javascript')
+    script(src='/js/jquery.upload-1.0.2.min.js', type='text/javascript')
+
+    script(src='/js/jquery.ui.widget.js', type='text/javascript')
+    script(src='/js/jquery.iframe-transport.js', type='text/javascript')
+    script(src='/js/jquery.fileupload.js', type='text/javascript')
+
     script(src='/components/ckeditor/ckeditor.js', type='text/javascript')
     script(src='/components/ckeditor/adapters/jquery.js', type='text/javascript')
-    //script(src='/components/ckeditor/config.js', type='text/javascript')
-
+    script(src='/components/bootstrap/dist/js/bootstrap.min.js', type='text/javascript')
     link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/jquery.fileupload.css')
     link(rel='stylesheet', href='/css/highlight.css')
     link(rel='stylesheet', href='/css/customized.css')
   body(id='outputBlock')!= body
+      
+    nav.navbar.navbar-default(role='navigation')
+      // Brand and toggle get grouped for better mobile display .navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='#') DownAndUp
+      // Collect the nav links, forms, and other content for toggling #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.active
+          a(href='#', id='upload-css') Upload Your CSS
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            | Dropdown
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href='#') Action
+            li
+              a(href='#') Another action
+            li
+              a(href='#') Something else here
+            li.divider
+            li
+              a(href='#') Separated link
+            li.divider
+            li
+              a(href='#') One more separated link
+      ul.nav.navbar-nav.navbar-right
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            | Dropbox
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href='#') Log In
+            li
+              a(href='#') Load
+            li
+              a(href='#') Save
+            li.divider
+            li
+              a(href='#') Log Out
 
-    button#btn_down(type='submit') down
+    span.btn.btn-success.fileinput-button
+      i.glyphicon.glyphicon-plus
+      span Select files...
+      // The file input field used as target for the file upload widget 
+      input#fileupload(type='file', name='files[]', multiple='multiple')
+
+    button(type='submit') down
     
     form
         //textarea(cols='80', rows='10', id='editor', class='ckeditor', name='content')
