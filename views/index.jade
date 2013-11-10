@@ -3,5 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to 
-  a(href="editor/") #{title}
+  a(href='editor/') #{title}
+  br
+  br
+  //button(href='/auth/dropbox') Login to Dropbox (by Don)
+  a(href='/auth/dropbox') Login to Dropbox (by Don)
+  br
+  br
   != voteko
