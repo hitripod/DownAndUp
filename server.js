@@ -108,8 +108,8 @@ app.post('/down', function(req, res) {
 });
 
 var options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  key: fs.readFileSync(path.resolve(__dirname, 'key.pem')),
+  cert: fs.readFileSync(path.resolve(__dirname, 'cert.pem'))
 };
 
 https.createServer(options, app).listen('443', function(){
