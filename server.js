@@ -10,10 +10,10 @@ var express = require('express')
   , http = require('http')
   , https = require('https')
   , fs = require('fs')
-  , path = require('path')
-  , conf = require('./conf')
-  , everyauth = require('everyauth');
-
+  , path = require('path');
+  //, conf = require('./conf')
+  //, everyauth = require('everyauth');
+/*
 everyauth.debug = true;
 var usersById = {};
 everyauth.everymodule
@@ -55,7 +55,7 @@ everyauth
         (usersByDropboxId[dropboxUserMetadata.uid] = addUser('dropbox', dropboxUserMetadata));
     })
     .redirectPath('/');
-
+*/
 var app = express();
 
 app.configure(function(){
@@ -73,8 +73,7 @@ app.configure(function(){
   //app.use(express.cookieParser('mr ripley'));
   app.use(express.cookieParser('downAndUp'));
   app.use(express.session());
-  app.use(everyauth.middleware());
-
+  //app.use(everyauth.middleware());
 });
 
 app.configure('development', function(){
@@ -87,15 +86,15 @@ app.configure( function () {
 });
 */
 
-//temp
-//app.get('/', routes.index);
+app.get('/', routes.index);
+/*
 app.get('/', function (req, res) {
-  console.log(req.user);  // FTW!
+  console.log(req.user);
   res.render('login');
 });
-
+/
 /*
-aapp.get('/', function (req, res) {
+app.get('/', function (req, res) {
   res.render('home');
 });
 */
@@ -108,28 +107,19 @@ app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
-<<<<<<< HEAD
+
 /*
-=======
 var options = {
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
 };
-
->>>>>>> branch 'master' of git@github.com:nko4/quick-hitter.git
+*/
+///*
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on  port " + app.get('port'));
 });
 //*/
-///*
-var server = http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-});
 //https.createServer(options, app).listen(app.get('port'), function(){
 //  console.log("Express server listening on port " + app.get('port'));
 //});
 //*/
-//everyauth.helpExpress(app);
-//everyauth.helpExpress(server);
-//module.exports = app;
-module.exports = server;
