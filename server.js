@@ -8,6 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , down = require('./routes/down')
   , http = require('http')
+  , https = require('https')
+  , fs = require('fs')
   , path = require('path')
   , conf = require('./conf')
   , everyauth = require('everyauth');
@@ -53,8 +55,6 @@ everyauth
         (usersByDropboxId[dropboxUserMetadata.uid] = addUser('dropbox', dropboxUserMetadata));
     })
     .redirectPath('/');
-
-
 
 var app = express();
 
@@ -108,7 +108,15 @@ app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
+<<<<<<< HEAD
 /*
+=======
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+>>>>>>> branch 'master' of git@github.com:nko4/quick-hitter.git
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on  port " + app.get('port'));
 });
@@ -117,6 +125,9 @@ http.createServer(app).listen(app.get('port'), function(){
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+//https.createServer(options, app).listen(app.get('port'), function(){
+//  console.log("Express server listening on port " + app.get('port'));
+//});
 //*/
 //everyauth.helpExpress(app);
 //everyauth.helpExpress(server);
