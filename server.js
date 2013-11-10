@@ -67,7 +67,6 @@ passport.use(new DropboxStrategy({
 ///*
 /*
 everyauth.debug = true;
-
 var usersById = {};
 everyauth.everymodule
   .findUserById( function (id, callback) {
@@ -87,7 +86,6 @@ function addUser (source, sourceUser) {
   }
   return user;
 }
-
 var usersByFbId = {};
 var usersByDropboxId = {};
 
@@ -95,6 +93,7 @@ everyauth.dropbox
   .entryPath('/auth/dropbox')
   .callbackPath('/auth/dropbox/callback');
 
+var usersByFbId = {};
 everyauth
   .facebook
     .appId(conf.fb.appId)
@@ -122,6 +121,7 @@ everyauth
     })
     .redirectPath('/');
 */
+
 //*/
 /*
 everyauth.dropbox
@@ -145,12 +145,12 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use(express.bodyParser({uploadDir:'./public/uploads'}));
-  //app.use(express.bodyParser());
+  //app.use(express.bodyParser({uploadDir:'./public/uploads'}));
+  app.use(express.bodyParser());
   //app.use(express.cookieParser('mr ripley'));
   //app.use(express.cookieParser('downAndUp'));
   //app.use(express.static(__dirname + '/../public'));
-  app.use(express.session());
+  //app.use(express.session());
   //app.use(everyauth.middleware(app));
   //app.use(express.session({ secret: 'keyboard cat' }));
   //app.use(express.session({ secret: 'skwp$^f9fw32[p-' }));
@@ -169,9 +169,6 @@ app.configure( function () {
   app.set('views', everyauthRoot + '/example/views');
 });
 */
-
-
-app.get('/', routes.index);
 /*
 app.get('/', function(req, res){
   //res.render('index', { user: req.user });
@@ -224,8 +221,9 @@ app.get('/', function (req, res) {
   res.render('home');
 });
 */
+app.get('/', routes.index);
 app.get('/editor', down.index);
-//app.get('/down', down.convert);
+app.get('/down', down.convert);
 //app.get('/login', down.login);
 
 //app.use(express.bodyParser());
@@ -242,8 +240,8 @@ app.post('/file-upload', function(req, res, next) {
 
 ///*
 // we need the fs module for moving the uploaded files
-var fs = require('fs');
-app.post('/file-upload', function(req, res) {
+//var fs = require('fs');
+//app.post('/file-upload', function(req, res) {
 /*
     console.log(req.body);
     console.log(req.files);
@@ -262,7 +260,7 @@ app.post('/file-upload', function(req, res) {
         });
     });
 */
-});
+//});
 //*/
 
 ///*
@@ -275,16 +273,17 @@ http.createServer(app).listen(app.get('port'), function(){
 //everyauth.helpExpress(app);
 /*
 var options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  key: fs.readFileSync(path.resolve(__dirname, 'key.pem')),
+  cert: fs.readFileSync(path.resolve(__dirname, 'cert.pem'))
 };
 
-https.createServer(options, app).listen(app.get('port'), function(){
+https.createServer(options, app).listen('443', function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+//http.createServer(app).listen(app.get('port'), function(){
+//  console.log("Express server listening on port " + app.get('port'));
+//});
 //*/
-
-
 /*
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
