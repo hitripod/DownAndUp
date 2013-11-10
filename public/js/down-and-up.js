@@ -73,10 +73,22 @@ var db_dropins = '8927n1gidx5s9kr';
 //var redirect_uri = 'https://localhost/editor/';
 var redirect_uri = "https://quick-hitter.2013.nodeknockout.com/editor/";
 var client = new Dropbox.Client({ key: db_core });
+var userNameHtml = 'Dropbox <b class="caret"></b>';
 
 var authDropbox = function() {
     var csrf = random_string();
     //cookie.set('csrf', csrf);
+    client.authenticate(function(error, client) {
+        if (error) { 
+            userNameHtml = 'Dropbox <b class="caret"></b>';
+            return showError(error);  
+        }
+        client.getAccountInfo(function(error, accountInfo) {
+            if (error)  
+                return showError(error);  
+            userNameHtml = accountInfo.name + '<b class="caret"></b>';
+        });
+    });
     window.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
        + encodeURIComponent(db_core)
        + '&state=' + encodeURIComponent(csrf)
@@ -161,19 +173,8 @@ var loadFromDropbox = function(e) {
 };
 
 $(document).ready(function(){
-    /*
-    client.authenticate(function(error, client) {
-        if (error) { 
-            $('#dropboxUser').html('Dropbox <b class="caret"></b>');
-            return showError(error);  
-        }
-        client.getAccountInfo(function(error, accountInfo) {
-            if (error)  
-                return showError(error);  
-            $('#dropboxUser').html(accountInfo.name + '<b class="caret"></b>');
-        });
-    });
-*/
+    $('#dropboxUser').html(userNameHtml);
+    
     $('#dropbox-log-in').click(authDropbox);
     $('#dropbox-log-out').click(logoutDropbox);
     $('.dropbox-saver').click(saveToDropbox);
