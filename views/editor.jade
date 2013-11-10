@@ -14,7 +14,7 @@ block append head
   script(src='//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js')
   script(src='/js/down-and-up.js', type='text/javascript')
   
-  nav.navbar.navbar-default(role='navigation')
+  nav.navbar.navbar-default(role='navigation', stylewidth='60px')
     // Brand and toggle get grouped for better mobile display .navbar-header
     button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
       span.sr-only Toggle navigation
@@ -111,7 +111,7 @@ block append head
                       );
                   }
                   else if ($("#btn_down").text() == 'Up') {
-                      $("#btn_down").text('down');
+                      $("#btn_down").text('Down');
                       CKEDITOR.instances.editor.setData(strModified);
                       $("#display").html('');
                   };
