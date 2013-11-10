@@ -161,6 +161,7 @@ var loadFromDropbox = function(e) {
 };
 
 $(document).ready(function(){
+    /*
     client.authenticate(function(error, client) {
         if (error) { 
             $('#dropboxUser').html('Dropbox <b class="caret"></b>');
@@ -172,6 +173,7 @@ $(document).ready(function(){
             $('#dropboxUser').html(accountInfo.name + '<b class="caret"></b>');
         });
     });
+*/
     $('#dropbox-log-in').click(authDropbox);
     $('#dropbox-log-out').click(logoutDropbox);
     $('.dropbox-saver').click(saveToDropbox);

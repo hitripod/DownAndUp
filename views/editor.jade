@@ -4,15 +4,16 @@ block append head
   link(rel='stylesheet', href='/css/style.css')
   link(rel='stylesheet', href='/css/highlight.css')
   link(rel='stylesheet', href='/css/customized.css')
-  //-link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/components/bootstrap/assets/css/docs.css')
 
-block append content
+  //script(src='/components/bootstrap/dist/js/bootstrap.min.js', type='text/javascript')
   script#dropboxjs(type='text/javascript', src='https://www.dropbox.com/static/api/1/dropins.js', data-app-key='8927n1gidx5s9kr')
   script(src='/components/ckeditor/ckeditor.js', type='text/javascript')
   script(src='/components/ckeditor/adapters/jquery.js', type='text/javascript')
   script(src='//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js')
   script(src='/js/down-and-up.js', type='text/javascript')
-
+  
   nav.navbar.navbar-default(role='navigation')
     // Brand and toggle get grouped for better mobile display .navbar-header
     button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
@@ -23,13 +24,24 @@ block append content
     ul.nav.navbar-nav
       li
         a.navbar-brand(href='/') DownAndUp
-    // Collect the nav links, forms, and other content for toggling #bs-example-navbar-collapse-1.collapse.navbar-collapse
-    ul.nav.navbar-nav
-      li
-        a(href='javascript: void(0)', id='upload-css') Upload Your CSS
     ul.nav.navbar-nav
       li.active
         a#btn_down(href='javascript: void(0)', style='width: 100px', align='center') down
+    ul.nav.navbar-nav
+      li
+        a(data-toggle='modal', data-target='#askForTitle') Set File Name
+        #askForTitle.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                h4#myModalLabel.modal-title Please Enter the File Name:
+              .modal-body
+                .divDialogElements
+                input#modalFilename.xlarge(name='xlInput', type='text', value='DownAndUp')
+              .modal-footer
+                button#modalCancel.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                button#modalOK.btn.btn-primary(type='button') OK
     ul.nav.navbar-nav.navbar-right
       li.dropdown
         a.dropdown-toggle(href='javascript: void(0)', data-toggle='dropdown')
@@ -47,7 +59,6 @@ block append content
           li.divider
           li
             a(href='javascript: void(0)') Log Out
-
   .container-fluid
     .row-fluid
       form
