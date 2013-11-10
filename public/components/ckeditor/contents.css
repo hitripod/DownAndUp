@@ -717,7 +717,7 @@ body .main-two-columns .sidebar-html { margin-right: 12px; width: 205px; padding
 .main-social { position: relative; margin-top: 25px; height: 48px; }
 .main-social .facebook-share { position: absolute; top: -3px; }
 
-code>code {
+pre>p>pre {
   display: block; padding: 0.5em;
   background: #000000;
   color: white;
