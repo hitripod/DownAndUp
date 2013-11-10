@@ -51,6 +51,7 @@ block append content
       //var up;   // pure text before markdown conversion
       //var down; // markdown-formatted html
       CKEDITOR.config.allowedContent = true;
+      CKEDITOR.config.contentCss = '/css/highlight.css';
       var strModified = '';
       var strSent = '';
       $("#btn_down").click(function(){
