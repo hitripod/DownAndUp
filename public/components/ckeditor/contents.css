@@ -153,7 +153,7 @@ pre .erlang_repl .function_or_atom,
 pre .asciidoc .header,
 pre .markdown .header,
 pre .coffeescript .attribute {
-  color: #800;
+  color: #d00;
 }
 
 pre .comment,
@@ -163,7 +163,7 @@ pre .diff .header,
 pre .chunk,
 pre .asciidoc .blockquote,
 pre .markdown .blockquote {
-  color: #888;
+  color: #ddd;
 }
 
 pre .number,
@@ -180,7 +180,7 @@ pre .asciidoc .bullet,
 pre .markdown .bullet,
 pre .asciidoc .link_url,
 pre .markdown .link_url {
-  color: #080;
+  color: #0d0;
 }
 
 pre .label,
@@ -717,3 +717,8 @@ body .main-two-columns .sidebar-html { margin-right: 12px; width: 205px; padding
 .main-social { position: relative; margin-top: 25px; height: 48px; }
 .main-social .facebook-share { position: absolute; top: -3px; }
 
+code>code {
+  display: block; padding: 0.5em;
+  background: #000000;
+  color: white;
+}
