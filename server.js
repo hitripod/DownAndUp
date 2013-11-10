@@ -8,6 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , down = require('./routes/down')
   , http = require('http')
+  , https = require('https')
+  , fs = require('fs')
   , path = require('path')
   , conf = require('./conf')
   , everyauth = require('everyauth');
@@ -38,12 +40,10 @@ everyauth
     })
     .redirectPath('/');
 
-
-
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 80);
+  app.set('port', process.env.PORT || 443);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -84,8 +84,12 @@ app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
-///*
-http.createServer(app).listen(app.get('port'), function(){
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+https.createServer(options, app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 //*/
