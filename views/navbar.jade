@@ -6,19 +6,24 @@ nav.navbar.navbar-default(role='navigation')
     span.icon-bar
     span.icon-bar
     span.icon-bar
-  a.navbar-brand(href='/') DownAndUp
+  ul.nav.navbar-nav
+      li.active
+        a.navbar-brand(href='/') DownAndUp
   // Collect the nav links, forms, and other content for toggling #bs-example-navbar-collapse-1.collapse.navbar-collapse
   ul.nav.navbar-nav
-    li.active
-      a(href='#', id='upload-css') Upload Your CSS
+    li
+      a#upload-css(href='javascript: void(0)') Upload Your CSS
+  ul.nav.navbar-nav
+    li
+      a#btn_down(href='/editor', style='width: 100px', align='center') down
   ul.nav.navbar-nav.navbar-right
     li.dropdown
-      a.dropdown-toggle(href='#', data-toggle='dropdown')
+      a.dropdown-toggle(href='javascript: void(0)', data-toggle='dropdown')
         | Dropbox
         b.caret
       ul.dropdown-menu
         li
-          a#dropbox-log-in(href='#') Log In
+          a#dropbox-log-in(href='javascript: void(0)') Log In
         li
           button(data-toggle='modal', data-target='#askForTitle') Filename
           #askForTitle.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -41,4 +46,4 @@ nav.navbar.navbar-default(role='navigation')
           a.dropbox-saver(href="https://dl.dropboxusercontent.com/u/3968081/DownAndUp.txt", data-filename="DownAndUp.txt");
         li.divider
         li
-          a(href='#') Log Out
+          a(href='javascript: void(0)') Log Out

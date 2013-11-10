@@ -1,23 +1,22 @@
 extends layout
 
 block content
-  .span6.offset2
-      h1= title
-      h4 A Markdown syntax visualization tool that synchronize with your dropbox.
-
+  include navbar
+  .container-fluid
+    .row-fluid
+      .span6
+      .span4.offset2
+        h1= title
+        h4 A Markdown syntax visualization tool that synchronize with your dropbox.
   p Welcome to 
     a(href='editor/') #{title}
-  br0
   br
-  //button(href='/auth/dropbox') Login to Dropbox (by Don)
-  //a(href='/auth/dropbox') Login to Dropbox (by Don)
-  //br
-  //br
-  form(method='post', enctype='multipart/form-data', action='/file-upload')
+  br
+  //-form(method='post', enctype='multipart/form-data', action='/file-upload')
     //-input(type='text', name='username')
     //-input(type='password', name='password')
-    input(type='file', name='thumbnail')
-    input(type='submit')
-  br
-  br
+    //-input(type='file', name='thumbnail')
+    //-input(type='submit')
+  //-br
+  //-br
   != voteko
