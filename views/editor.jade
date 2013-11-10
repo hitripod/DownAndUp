@@ -99,8 +99,17 @@ block append content
                               //up = CKEDITOR.instances.editor.getData();
                               //console.log(up)
                               CKEDITOR.instances.editor.setData(responseText);
-                              $("#display").html(responseText);
-                          },
+                              //$("#display").html(responseText);
+                              $('code').replaceWith(function(){
+                                  return $("<p />", {html: $(this).html()});
+                              });
+                              $('iframe').contents().find('code').replaceWith(function(){
+                                  return $("<p />", {html: $(this).html()});
+                              });
+                              $('iframe').contents().find('code').replaceWith(function(){
+                                  return $("<pre />", {html: $(this).html()});
+                              });
+                          }, 
                           "html"
                       );
                   }
