@@ -78,7 +78,7 @@ var authDropbox = function() {
     var csrf = random_string();
     //cookie.set('csrf', csrf);
     
-    indow.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
+    window.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
        + encodeURIComponent(db_core)
        + '&state=' + encodeURIComponent(csrf)
        + '&response_type=token&redirect_uri=' + encodeURIComponent(redirect_uri);
