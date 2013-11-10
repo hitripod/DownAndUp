@@ -20,15 +20,19 @@ html
     link(rel='stylesheet', href='/css/jquery.fileupload.css')
     link(rel='stylesheet', href='/css/highlight.css')
     link(rel='stylesheet', href='/css/customized.css')
-    //link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
   body(id='outputBlock')!= body
     include header
 
-    div(align='center')
-        input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
-        button#btn_down(type='submit', style='width:50px') down
-        form
-            textarea(cols='80', rows='10', id='editor', name='content')
+    //div(align='center')
+    //div(align='container')
+    .container-fluid
+        .row-fluid
+            .offset8
+                input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
+                button#btn_down(type='submit', style='width:50px') down
+            form
+                textarea(cols='80', rows='10', id='editor', name='content')
 
     #display
 
