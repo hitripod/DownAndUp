@@ -98,7 +98,6 @@ $(document).ready(function(){
         ////client.authorize();
         
         client.authenticate(function(error, client) {
-            alert("auth");
           if (error) {
             // Replace with a call to your own error-handling code.
             //

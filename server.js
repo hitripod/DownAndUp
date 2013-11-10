@@ -107,12 +107,19 @@ app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on  port " + app.get('port'));
+https.createServer(options, app).listen('443', function(){
+  console.log("Express server listening on port " + app.get('port'));
 });
-//*/
-//https.createServer(options, app).listen(app.get('port'), function(){
+//http.createServer(app).listen(app.get('port'), function(){
 //  console.log("Express server listening on port " + app.get('port'));
 //});
 //*/
+//everyauth.helpExpress(app);
+//everyauth.helpExpress(server);
+//module.exports = app;
+//module.exports = server;
