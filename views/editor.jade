@@ -39,20 +39,6 @@ block append content
           li
             a#dropbox-log-in(href='javascript: void(0)') Log In
           li
-            button(data-toggle='modal', data-target='#askForTitle') Filename
-            #askForTitle.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-              .modal-dialog
-                .modal-content
-                  .modal-header
-                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                    h4#myModalLabel.modal-title Please Enter the File Name:
-                  .modal-body
-                    .divDialogElements
-                    input#modalFilename.xlarge(name='xlInput', type='text', value='DownAndUp')
-                  .modal-footer
-                    button#modalCancel.btn.btn-default(type='button', data-dismiss='modal') Cancel
-                    button#modalOK.btn.btn-primary(type='button') OK
-          li
             //a(href='#') Load
             input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
           li

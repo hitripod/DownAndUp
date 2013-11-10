@@ -1,4 +1,6 @@
 !!! 5
+block append content
+  script#dropboxjs(type='text/javascript', src='https://www.dropbox.com/static/api/1/dropins.js', data-app-key='8927n1gidx5s9kr')
 nav.navbar.navbar-default(role='navigation')
   // Brand and toggle get grouped for better mobile display .navbar-header
   button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
@@ -25,25 +27,11 @@ nav.navbar.navbar-default(role='navigation')
         li
           a#dropbox-log-in(href='javascript: void(0)') Log In
         li
-          button(data-toggle='modal', data-target='#askForTitle') Filename
-          #askForTitle.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-            .modal-dialog
-              .modal-content
-                .modal-header
-                  button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                  h4#myModalLabel.modal-title Please Enter the File Name:
-                .modal-body
-                  .divDialogElements
-                  input#modalFilename.xlarge(name='xlInput', type='text', value='DownAndUp')
-                .modal-footer
-                  button#modalCancel.btn.btn-default(type='button', data-dismiss='modal') Cancel
-                  button#modalOK.btn.btn-primary(type='button') OK
-        li
-          //a(href='#') Load
+          //-a(href='#') Load
           input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
         li
-          //a(href='#') Save
+          //-a(href='#') Save
           a.dropbox-saver(href="https://dl.dropboxusercontent.com/u/3968081/DownAndUp.txt", data-filename="DownAndUp.txt");
         li.divider
         li
-          a(href='javascript: void(0)') Log Out
+          a#dropbox-log-out(href='javascript: void(0)') Log Out
