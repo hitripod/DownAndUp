@@ -85,6 +85,15 @@ var authDropbox = function() {
     
 };
 
+var logoutDropbox = function() {
+    return client.signOut(function(error) {
+        if (error) {
+            return showError(error);
+        }
+        return window.location.reload();
+    });
+};
+
 var dbWriteFile = function(filename, content) {
     client.authenticate(function(error, client) {
         if (error) 
@@ -140,6 +149,7 @@ var saveToDropbox = function() {
     Dropbox.save(options);
 };
 
+
 var loadFromDropbox = function(e) {
     var match = e.files[0].link.match(/\w+.txt$/);
     if (match == null){
@@ -153,7 +163,19 @@ var loadFromDropbox = function(e) {
 };
 
 $(document).ready(function(){
+    client.authenticate(function(error, client) {
+        if (error) { 
+            $('#dropboxUser').html('Dropbox <b class="caret"></b>');
+            return showError(error);  
+        }
+        client.getAccountInfo(function(error, accountInfo) {
+            if (error)  
+                return showError(error);  
+            $('#dropboxUser').html(accountInfo.name + '<b class="caret"></b>');
+        });
+    });
     $('#dropbox-log-in').click(authDropbox);
+    $('#dropbox-log-out').click(logoutDropbox);
     $('.dropbox-saver').click(saveToDropbox);
     document.getElementById("db-chooser").
         addEventListener("DbxChooserSuccess", function(e){loadFromDropbox(e);}, false);
