@@ -26,7 +26,7 @@ block append head
         a.navbar-brand(href='/') DownAndUp
     ul.nav.navbar-nav
       li.active
-        a#btn_down(href='javascript: void(0)', style='width: 100px', align='center') down
+        a#btn_down(href='javascript: void(0)', style='width: 100px', align='center') Down
     ul.nav.navbar-nav.navbar-right
       li.dropdown
         a.dropdown-toggle(href='javascript: void(0)', data-toggle='dropdown')
@@ -78,9 +78,9 @@ block append head
               var strModified = '';
               var strSent = '';
               $("#btn_down").click(function(){
-                  if ($("#btn_down").text() == 'down') {
+                  if ($("#btn_down").text() == 'Down') {
                       //console.log($("#btn_down").text());
-                      $("#btn_down").text('up');
+                      $("#btn_down").text('Up');
                       strModified = CKEDITOR.instances.editor.getSnapshot();
                       strSent = strModified.replace(/<pre>/gi, '');
                       strSent = strSent.replace(/<code>/gi, '');
@@ -110,7 +110,7 @@ block append head
                           "html"
                       );
                   }
-                  else if ($("#btn_down").text() == 'up') {
+                  else if ($("#btn_down").text() == 'Up') {
                       $("#btn_down").text('down');
                       CKEDITOR.instances.editor.setData(strModified);
                       $("#display").html('');
