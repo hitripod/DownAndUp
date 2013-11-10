@@ -19,12 +19,7 @@ html
     //link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
   body(id='outputBlock')!= body
     include header
-    input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
-    //span.btn.btn-success.filestrOriginal-button
-    //  i.glyphicon.glyphicon-plus
-    //  span Select files...
-    //  // The file strOriginal field used as target for the file upload widget 
-    //  strOriginal#fileupload(type='file', name='files[]', multiple='multiple')
+
     input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
     a.dropbox-saver(href="https://dl.dropboxusercontent.com/u/3968081/DownAndUp.txt", data-filename="DownAndUp.txt");
 
