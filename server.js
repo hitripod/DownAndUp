@@ -43,7 +43,7 @@ everyauth
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 443);
+  app.set('port', process.env.PORT || 80);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -89,7 +89,10 @@ var options = {
   cert: fs.readFileSync('cert.pem')
 };
 
-https.createServer(options, app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+//https.createServer(options, app).listen(app.get('port'), function(){
+//  console.log("Express server listening on port " + app.get('port'));
+//});
 //*/
