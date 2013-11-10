@@ -8,7 +8,6 @@ exports.index = function(req, res){
 };
 
 exports.convert = function(req, res){
-
     var marked = require("marked");
     var hljs   = require("highlight.js");
     var http   = require('http');
