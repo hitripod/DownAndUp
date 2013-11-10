@@ -11,23 +11,6 @@ nav.navbar.navbar-default(role='navigation')
   ul.nav.navbar-nav
     li.active
       a(href='#', id='upload-css') Upload Your CSS
-    li.dropdown
-      a.dropdown-toggle(href='#', data-toggle='dropdown')
-        | Dropdown
-        b.caret
-      ul.dropdown-menu
-        li
-          a(href='#') Action
-        li
-          a(href='#') Another action
-        li
-          a(href='#') Something else here
-        li.divider
-        li
-          a(href='#') Separated link
-        li.divider
-        li
-          a(href='#') One more separated link
   ul.nav.navbar-nav.navbar-right
     li.dropdown
       a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -37,9 +20,25 @@ nav.navbar.navbar-default(role='navigation')
         li
           a#dropbox-log-in(href='#') Log In
         li
-          a(href='#') Load
+          button(data-toggle='modal', data-target='#askForTitle') Filename
+          #askForTitle.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                  h4#myModalLabel.modal-title Please Enter the File Name:
+                .modal-body
+                  .divDialogElements
+                  input#modalFilename.xlarge(name='xlInput', type='text', value='DownAndUp')
+                .modal-footer
+                  button#modalCancel.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                  button#modalOK.btn.btn-primary(type='button') OK
         li
-          a(href='#') Save
+          //a(href='#') Load
+          input#db-chooser(type='dropbox-chooser', name='selected-file', style='visibility: hidden;')
+        li
+          //a(href='#') Save
+          a.dropbox-saver(href="https://dl.dropboxusercontent.com/u/3968081/DownAndUp.txt", data-filename="DownAndUp.txt");
         li.divider
         li
           a(href='#') Log Out
