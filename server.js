@@ -8,7 +8,37 @@ var express = require('express')
   , user = require('./routes/user')
   , down = require('./routes/down')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , conf = require('./conf')
+  , everyauth = require('everyauth');
+
+everyauth.debug = true;
+everyauth.everymodule
+  .findUserById( function (id, callback) {
+    callback(null, usersById[id]);
+  });
+
+everyauth
+  .facebook
+    .appId(conf.fb.appId)
+    .appSecret(conf.fb.appSecret)
+    .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
+      return usersByFbId[fbUserMetadata.id] ||
+        (usersByFbId[fbUserMetadata.id] = addUser('facebook', fbUserMetadata));
+    })
+    .redirectPath('/');
+
+everyauth
+  .dropbox
+    .consumerKey(conf.dropbox.consumerKey)
+    .consumerSecret(conf.dropbox.consumerSecret)
+    .findOrCreateUser( function (sess, accessToken, accessSecret, dropboxUserMetadata) {
+      return usersByDropboxId[dropboxUserMetadata.uid] ||
+        (usersByDropboxId[dropboxUserMetadata.uid] = addUser('dropbox', dropboxUserMetadata));
+    })
+    .redirectPath('/');
+
+
 
 var app = express();
 
@@ -22,13 +52,30 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+
+  //app.use(express.bodyParser());
+  //app.use(express.cookieParser('mr ripley'));
+  app.use(express.cookieParser('downAndUp'));
+  app.use(express.session());
+  app.use(everyauth.middleware());
+
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
-
+/*
+app.configure( function () {
+  app.set('view engine', 'jade');
+  app.set('views', everyauthRoot + '/example/views');
+});
+*/
 app.get('/', routes.index);
+/*
+aapp.get('/', function (req, res) {
+  res.render('home');
+});
+*/
 app.get('/editor', down.index);
 app.get('/down', down.convert);
 
@@ -37,6 +84,8 @@ app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
+///*
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+//*/
