@@ -36,3 +36,7 @@ exports.convert = function(req, res){
     //var rawHtml = '<pre><code>' + markedInput + '</code></pre>';
     //res.send(rawHtml);
 };
+
+exports.login = function(req, res){
+    res.render('login', {res: res});
+};

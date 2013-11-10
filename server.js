@@ -13,11 +13,27 @@ var express = require('express')
   , everyauth = require('everyauth');
 
 everyauth.debug = true;
+var usersById = {};
 everyauth.everymodule
   .findUserById( function (id, callback) {
     callback(null, usersById[id]);
   });
+  
+var nextUserId = 0;
+function addUser (source, sourceUser) {
+  var user;
+  if (arguments.length === 1) { // password-based
+    user = sourceUser = source;
+    user.id = ++nextUserId;
+    return usersById[nextUserId] = user;
+  } else { // non-password-based
+    user = usersById[++nextUserId] = {id: nextUserId};
+    user[source] = sourceUser;
+  }
+  return user;
+}
 
+var usersByFbId = {};
 everyauth
   .facebook
     .appId(conf.fb.appId)
@@ -70,7 +86,14 @@ app.configure( function () {
   app.set('views', everyauthRoot + '/example/views');
 });
 */
-app.get('/', routes.index);
+
+//temp
+//app.get('/', routes.index);
+app.get('/', function (req, res) {
+  console.log(req.user);  // FTW!
+  res.render('login');
+});
+
 /*
 aapp.get('/', function (req, res) {
   res.render('home');
@@ -78,14 +101,24 @@ aapp.get('/', function (req, res) {
 */
 app.get('/editor', down.index);
 app.get('/down', down.convert);
+app.get('/login', down.login);
 
-app.use(express.bodyParser());
+//app.use(express.bodyParser());
 app.post('/down', function(req, res) {
     down.convert(req, res);
 });
 
-///*
+/*
 http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on  port " + app.get('port'));
+});
+//*/
+///*
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 //*/
+//everyauth.helpExpress(app);
+//everyauth.helpExpress(server);
+//module.exports = app;
+module.exports = server;
