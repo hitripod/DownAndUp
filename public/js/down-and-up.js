@@ -69,29 +69,34 @@ var showError = function(error) {
   }
 };
 
-var client = new Dropbox.Client({ key: "8927n1gidx5s9kr" });
+function random_string() {
+    var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    var s = '';
+    for (var i = 0; i < 22; i++) {
+        s += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+    return s;
+}
 
-
-                 function random_string() {
-                                var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-                                var s = '';
-                                for (var i = 0; i < 22; i++) {
-                                        s += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                                }
-                                return s;
-                        }
+var dbkey        = 'iuaoivawhqzqxrz';
+//var redirect_uri = 'http://localhost:8000/editor/';
+//var redirect_uri = 'https://localhost/editor/';
+var redirect_uri = "https://quick-hitter.2013.nodeknockout.com/editor/";
+var client = new Dropbox.Client({ key: dbkey });
 
 $(document).ready(function(){
     $('#dropbox-log-in').click(function(){
-        //var csrf = random_string();
-        ////cookie.set('csrf', csrf);
-        //window.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
-        //    + encodeURIComponent('8927n1gidx5s9kr')
-        //    + '&state=' + encodeURIComponent(csrf)
-        //    + '&response_type=token&redirect_uri=' + encodeURIComponent('https://localhost:8000/editor/');
-        client.authDriver(new Dropbox.AuthDriver.Popup({
-            receiverUrl: "https://quick-hitter.2013.nodeknockout.com/editor/"}));
-        //client.authorize();
+        var csrf = random_string();
+        //cookie.set('csrf', csrf);
+        
+        window.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
+            + encodeURIComponent(dbkey)
+            + '&state=' + encodeURIComponent(csrf)
+            + '&response_type=token&redirect_uri=' + encodeURIComponent(redirect_uri);
+        //client.authDriver(new Dropbox.AuthDriver.Popup({
+        //    receiverUrl: redirect_uri}));
+        ////client.authorize();
+        
         client.authenticate(function(error, client) {
             alert("auth");
           if (error) {
