@@ -20,38 +20,28 @@
 //    selectText('outputBlock');
 //    alert("hi");
 //}
+
 var showError = function(error) {
   switch (error.status) {
   case Dropbox.ApiError.INVALID_TOKEN:
-    // If you're using dropbox.js, the only cause behind this error is that
-    // the user token expired.
-    // Get the user through the authentication flow again.
-    console.log("invalid token");
+    console.log("The user token might be expired: invalid token");
+    authDropbox();
     break;
 
   case Dropbox.ApiError.NOT_FOUND:
-    // The file or folder you tried to access is not in the user's Dropbox.
-    // Handling this error is specific to your application.
-    console.log("not found");
+    console.log("The file or folder not found");
     break;
 
   case Dropbox.ApiError.OVER_QUOTA:
-    // The user is over their Dropbox quota.
-    // Tell them their Dropbox is full. Refreshing the page won't help.
-    console.log("over quota");
+    console.log("Dropbox over quota");
     break;
 
   case Dropbox.ApiError.RATE_LIMITED:
-    // Too many API requests. Tell the user to try again later.
-    // Long-term, optimize your code to use fewer API calls.
-    console.log("rate limited");
+    console.log("Too many API requests: rate limited");
     break;
 
   case Dropbox.ApiError.NETWORK_ERROR:
-    // An error occurred at the XMLHttpRequest layer.
-    // Most likely, the user's network connection is down.
-    // API calls will not succeed until the user gets back online.
-    console.log("network error");
+    console.log("XMLHttpRequest or user's network connection is down: network error");
     break;
 
   case Dropbox.ApiError.INVALID_PARAM:
@@ -64,8 +54,6 @@ var showError = function(error) {
     console.log("caused by a bug in dropbox.js");
     console.log(error);
     console.log(error.status);
-    // Caused by a bug in dropbox.js, in your application, or in Dropbox.
-    // Tell the user an error occurred, ask them to refresh the page.
   }
 };
 
@@ -78,62 +66,106 @@ function random_string() {
     return s;
 }
 
-var dbkey        = 'iuaoivawhqzqxrz';
+
+var db_core    = 'iuaoivawhqzqxrz'; // App Key
+var db_dropins = '8927n1gidx5s9kr';
 //var redirect_uri = 'http://localhost:8000/editor/';
 //var redirect_uri = 'https://localhost/editor/';
 var redirect_uri = "https://quick-hitter.2013.nodeknockout.com/editor/";
-var client = new Dropbox.Client({ key: dbkey });
+var client = new Dropbox.Client({ key: db_core });
 
-$(document).ready(function(){
-    $('#dropbox-log-in').click(function(){
-        var csrf = random_string();
-        //cookie.set('csrf', csrf);
-        
-        window.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
-            + encodeURIComponent(dbkey)
-            + '&state=' + encodeURIComponent(csrf)
-            + '&response_type=token&redirect_uri=' + encodeURIComponent(redirect_uri);
-        //client.authDriver(new Dropbox.AuthDriver.Popup({
-        //    receiverUrl: redirect_uri}));
-        ////client.authorize();
-        
-        client.authenticate(function(error, client) {
-          if (error) {
-            // Replace with a call to your own error-handling code.
-            //
-            // Don't forget to return from the callback, so you don't execute the code
-            // that assumes everything went well.
-            return showError(error);
-          }
-        
-          // Replace with a call to your own application code.
-          //
-          // The user authorized your app, and everything went well.
-          // client is a Dropbox.Client instance that you can use to make API calls.
-          //doSomethingCool(client);
+var authDropbox = function() {
+    var csrf = random_string();
+    //cookie.set('csrf', csrf);
+    
+    indow.location = 'https://www.dropbox.com/1/oauth2/authorize?client_id='
+       + encodeURIComponent(db_core)
+       + '&state=' + encodeURIComponent(csrf)
+       + '&response_type=token&redirect_uri=' + encodeURIComponent(redirect_uri);
+    
+};
+
+var dbWriteFile = function(filename, content) {
+    client.authenticate(function(error, client) {
+        if (error) 
+            return showError(error);  
+        client.getAccountInfo(function(error, accountInfo) {
+            if (error) 
+                return showError(error);  
+            console.log(accountInfo.name);
+        });
+        client.writeFile(filename, content, function(error, stat) {
+            if (error) 
+                return showError(error);  
         });
     });
-    document.getElementById("db-chooser").addEventListener("DbxChooserSuccess",
-        function(e) {
-            alert("Here's the chosen file: " + e.files[0].link)
-            client.writeFile("hello_world.txt", "Hello, world!\n", function(error, stat) {
-              if (error) {
-                return showError(error);  // Something went wrong.
-              }
-            
-              alert("File saved as revision " + stat.revisionTag);
-            });
-        }, false
-    );
+}
 
-    $('#fileupload').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
-        }
+var dbReadFile = function(filename) {
+    client.authenticate(function(error, client) {
+        if (error) 
+            return showError(error); 
+        client.getAccountInfo(function(error, accountInfo) {
+            if (error) 
+                return showError(error);  
+            console.log(accountInfo.name);
+        });
+        client.readFile(filename, function(error, data) {
+            if (error) 
+                return showError(error);  
+            CKEDITOR.instances.editor.setData(data);
+        });
+    });
+}
+
+var filenameToSave = "DownAndUp";
+var saveToDropbox = function() {
+    var file = filenameToSave+".txt";
+    console.log(file);
+
+    options = {
+        files: [
+            {
+                'filename': file,
+                'url': 'https://dl.dropboxusercontent.com/u/3968081/DownAndUp.txt' 
+            }
+        ],
+        success: function() {},
+        progress: function(progress) {},
+        cancel: function() {},
+        error: function(err) {}
+    }
+    dbWriteFile(file, CKEDITOR.instances.editor.getSnapshot());
+    $('.dropbox-saver').attr('data-filename', file);
+    Dropbox.save(options);
+};
+
+var loadFromDropbox = function(e) {
+    var match = e.files[0].link.match(/\w+.txt$/);
+    if (match == null){
+        alert("Invlid file. lease select Dropbox/App/DownAndUp/*.txt(Use DownAndUp.txt as the default.)");
+        dbReadFile("DownAndUp.txt");
+        return;
+    }
+    var file = match[0];
+    console.log(file);
+    dbReadFile(file);
+};
+
+$(document).ready(function(){
+    $('#dropbox-log-in').click(authDropbox);
+    $('.dropbox-saver').click(saveToDropbox);
+    document.getElementById("db-chooser").
+        addEventListener("DbxChooserSuccess", function(e){loadFromDropbox(e);}, false);
+    $('#windowTitleDialog').bind('show', function () {
+        document.getElementById ("xlInput").value = document.title;
     });
 
+    $('#modalOK').click(function () {
+        filenameToSave = $('input#modalFilename').val();
+        $('#askForTitle').modal('hide');
+    });
+    $('#askForTitle').on('shown.bs.modal', function () {
+        $('input#modalFilename').select();
+    });
 });
-
