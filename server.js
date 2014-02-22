@@ -46,7 +46,7 @@ var options = {
     cert: fs.readFileSync(path.resolve(__dirname, 'cert.pem'))
 };
 
-http.createServer( app).listen('8000', function(){
+http.createServer( app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));
 });
 //https.createServer(options, app).listen('443', function(){
